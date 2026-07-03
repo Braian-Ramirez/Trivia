@@ -48,6 +48,14 @@ Para que el juego funcione, el administrador debe registrar las categorías, pre
    - En la misma pantalla (abajo, en los "Inlines"), encontrarás los espacios para las respuestas.
    - Escribe 4 opciones de respuesta para la pregunta y marca la casilla **"Es correcta"** únicamente en la respuesta verdadera.
    - Haz clic en "Guardar". (Crea al menos 5 preguntas, una para cada nivel).
+4.	Iniciar una partida 
+	- Una vez cargada el banco de preguntas podrás iniciar una partida.
+	- Regístrate con tu nombre, número de identificación y contraseña.
+	- Cuando este en el dashboard podrás seleccionar iniciar partida.
+	- Recuerda que debes contestar correctamente la cinco preguntas para ganar la partida.
+	- Cuentas con 60 segundos por pregunta para poder responder. 
+	- Si contestas mal una pregunta o el tiempo se agota perderás tanto los puntos acumulados y la partida. 
+
 
 ## 2. Documentación de Arquitectura de la Solución
 
