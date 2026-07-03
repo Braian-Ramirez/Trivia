@@ -1,4 +1,4 @@
-# Trivia Challenge - Prueba Técnica Ciel
+# Trivia Challenge
 
 Juego de Trivia de 5 rondas con niveles de complejidad progresiva. Construido con **Django (Python)** y **Vanilla JavaScript**.
 
