@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Trivia - Ciel</title>
+    <!-- Google Font para tipografía premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body class="auth-page">
+    <div class="container">
+        <div class="auth-card">
+            <div class="logo-container">
+                <span class="logo-badge">Ciel Challenge</span>
+                <h1>Trivia Game</h1>
+                <p>Demuestra tu conocimiento y acumula premios</p>
+            </div>
+
+            <!-- Formulario de Inicio de Sesión -->
+            <div id="login-container">
+                <h2>Iniciar Sesión</h2>
+                {% if error_login %}
+                <div class="alert alert-danger">{{ error_login }}</div>
+                {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="login">
+
+                    <div class="form-group">
+                        <label for="identificacion-login">Número de Identificación</label>
+                        <input type="text" id="identificacion-login" name="identificacion" placeholder="Ej. 10203040"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password-login">Contraseña</label>
+                        <input type="password" id="password-login" name="password" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Ingresar al Juego</button>
+                </form>
+                <div class="auth-switch">
+                    ¿No tienes una cuenta? <a href="#" id="show-register">Regístrate aquí</a>
+                </div>
+            </div>
+
+            <!-- Formulario de Registro (oculto por defecto) -->
+            <div id="register-container" class="hidden">
+                <h2>Crear Cuenta</h2>
+                {% if error_registro %}
+                <div class="alert alert-danger">{{ error_registro }}</div>
+                {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="registro">
+
+                    <div class="form-group">
+                        <label for="nombre-reg">Nombre Completo</label>
+                        <input type="text" id="nombre-reg" name="nombre" placeholder="Ej. Juan Pérez" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="identificacion-reg">Número de Identificación</label>
+                        <input type="text" id="identificacion-reg" name="identificacion" placeholder="Ej. 10203040"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password-reg">Contraseña</label>
+                        <input type="password" id="password-reg" name="password" placeholder="Crea una contraseña"
+                            required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-block">Registrarse y Jugar</button>
+                </form>
+                <div class="auth-switch">
+                    ¿Ya tienes una cuenta? <a href="#" id="show-login">Inicia sesión aquí</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cargar Script de Autenticación Externo -->
+    <script src="{% static 'js/auth.js' %}"></script>
+</body>
+
+</html>

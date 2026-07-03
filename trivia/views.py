@@ -16,6 +16,8 @@ from .services import TriviaServices
 def login_registro_view(request):
     """Muestra la página de inicio (Login y Registro combinados) o redirige si ya está autenticado."""
     if request.user.is_authenticated:
+        if request.user.is_staff or request.user.is_superuser:
+            return redirect('/admin/')
         return redirect('dashboard')
 
     error_login = None
@@ -67,7 +69,9 @@ def login_registro_view(request):
 @login_required(login_url='login_registro')
 def dashboard_view(request):
     """Muestra el historial de partidas del jugador."""
-    partidas = Partida.objects.filter(jugador=request.user).order_index = 0
+    if request.user.is_staff or request.user.is_superuser:
+        return redirect('/admin/')
+        
     # Ordenar por fecha de creación descendente para mostrar la más reciente primero
     partidas = Partida.objects.filter(jugador=request.user).order_by('-fecha_creacion')
     return render(request, 'trivia/dashboard.html', {'partidas': partidas})
@@ -82,6 +86,8 @@ def logout_view(request):
 @login_required(login_url='login_registro')
 def juego_view(request):
     """Renderiza el tablero principal del juego (SPA)."""
+    if request.user.is_staff or request.user.is_superuser:
+        return redirect('/admin/')
     return render(request, 'trivia/juego.html')
 
 

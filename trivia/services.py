@@ -9,7 +9,6 @@ class TriviaServices:
     def iniciar_partida(jugador):
         """Crear e iniciar nueva partida"""
         # Si el jugador tiene una partida en progreso, la damos por perdida para evitar conflictos
-
         Partida.objects.filter(jugador=jugador, estado='EN_PROGRESO').update(estado='PERDIDA', puntaje=0)
 
         # Crear la nueva partida

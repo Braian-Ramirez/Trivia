@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Trivia Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body class="dashboard-page">
+    <div class="container py-5">
+        <header class="dashboard-header">
+            <div class="user-greeting">
+                <span class="badge">Sesión Activa (ID: {{ user.username }})</span>
+                <h1>¡Hola, {{ user.first_name }}!</h1>
+                <p>Bienvenido a tu panel de control de trivia.</p>
+            </div>
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger">Cerrar Sesión</a>
+        </header>
+
+        <!-- Sección de Estadísticas -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>Partidas Jugadas</h3>
+                <p class="stat-value">{{ partidas.count }}</p>
+            </div>
+            <div class="stat-card featured-stat">
+                <h3>Acción</h3>
+                <a href="{% url 'juego' %}" class="btn btn-success btn-lg btn-block mt-3">¡Iniciar Nueva Partida!</a>
+            </div>
+        </section>
+
+        <!-- Tabla de Historial de Partidas -->
+        <section class="history-section mt-5">
+            <h2>Historial de tus Partidas</h2>
+            <div class="table-container">
+                {% if partidas %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha y Hora</th>
+                            <th>Nivel Alcanzado</th>
+                            <th>Puntaje Acumulado</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for partida in partidas %}
+                        <tr>
+                            <td>#{{ partida.id }}</td>
+                            <td>{{ partida.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                            <td>Ronda {{ partida.ronda_actual }}</td>
+                            <td class="font-weight-bold">{{ partida.puntaje }} pts</td>
+                            <td>
+                                {% if partida.estado == 'GANADA' %}
+                                <span class="status-badge status-won">Ganada</span>
+                                {% elif partida.estado == 'RETIRADO' %}
+                                <span class="status-badge status-retired">Retirado</span>
+                                {% elif partida.estado == 'PERDIDA' %}
+                                <span class="status-badge status-lost">Perdida</span>
+                                {% else %}
+                                <span class="status-badge status-playing">En Curso</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state">
+                    <p>Aún no has jugado ninguna partida. ¡Haz clic arriba para iniciar tu primera aventura!</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

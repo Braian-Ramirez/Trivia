@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego - Trivia Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body class="game-page">
+
+    <!-- PANTALLA DE INICIO DE PARTIDA -->
+    <div id="screen-start" class="screen-center">
+        <div class="game-card">
+            <span class="logo-badge">Trivia Challenge</span>
+            <h1>¿Estás listo para jugar?</h1>
+            <p>Habrá <strong>5 rondas</strong>. Cada ronda tiene <strong>60 segundos</strong>.</p>
+            <p>Puedes <strong>retirarte antes</strong> de cada pregunta para conservar tu puntaje acumulado.</p>
+            <div class="actions-row">
+                <a href="{% url 'dashboard' %}" class="btn btn-outline">Volver al Dashboard</a>
+                <button id="btn-iniciar" class="btn btn-primary btn-lg">¡Iniciar Partida!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE JUEGO ACTIVO -->
+    <div id="screen-game" class="hidden">
+        <!-- Barra de estado superior -->
+        <div class="game-status-bar">
+            <div class="status-item">
+                <span class="label">Jugador</span>
+                <span class="value">{{ user.first_name }}</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Ronda</span>
+                <span id="info-ronda" class="value">1 / 5</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Puntaje Acumulado</span>
+                <span id="info-puntaje" class="value score-value">0 pts</span>
+            </div>
+        </div>
+
+        <!-- Temporizador -->
+        <div class="timer-container">
+            <div class="timer-circle">
+                <svg class="timer-svg" viewBox="0 0 120 120">
+                    <circle class="timer-bg" cx="60" cy="60" r="54" />
+                    <circle id="timer-arc" class="timer-arc" cx="60" cy="60" r="54" />
+                </svg>
+                <span id="timer-display" class="timer-number">60</span>
+            </div>
+        </div>
+
+        <!-- Pregunta y respuestas -->
+        <div class="question-area">
+            <div class="question-meta">
+                <span id="info-categoria" class="category-badge">Categoría</span>
+                <span id="info-premio-ronda" class="prize-badge">+0 pts</span>
+            </div>
+            <p id="pregunta-texto" class="question-text">Cargando pregunta...</p>
+            <div id="respuestas-container" class="answers-grid">
+                <!-- Las opciones se insertan dinámicamente con JS -->
+            </div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="game-actions">
+            <button id="btn-retirarse" class="btn btn-retire">Retirarme y conservar puntaje</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE RESULTADO FINAL -->
+    <div id="screen-result" class="hidden screen-center">
+        <div class="game-card result-card">
+            <div id="result-icon" class="result-icon">🏆</div>
+            <h2 id="result-title" class="result-title">Resultado</h2>
+            <p id="result-message" class="result-message">-</p>
+            <div class="result-score-container">
+                <span class="label">Puntaje Final</span>
+                <span id="result-puntaje" class="result-score">0 pts</span>
+            </div>
+            <div class="actions-row">
+                <a href="{% url 'dashboard' %}" class="btn btn-outline">Ver Historial</a>
+                <button id="btn-jugar-de-nuevo" class="btn btn-primary">Jugar de Nuevo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Token CSRF disponible para las peticiones AJAX -->
+    <script>
+        const CSRF_TOKEN = "{{ csrf_token }}";
+    </script>
+    <script src="{% static 'js/game.js' %}"></script>
+</body>
+
+</html>
